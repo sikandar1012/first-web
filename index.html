@@ -16,13 +16,78 @@
 body {
     height: 100vh;
     overflow: hidden;
-    background: linear-gradient(135deg, #06145f, #102c9c, #1746c5, #07134d);
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+
+    background: linear-gradient(
+        180deg,
+        #168de0 0%,
+        #58b9f5 40%,
+        #a4dcff 75%,
+        #ffe0a3 100%
+    );
 }
 
+/* Sunrise glow */
+.sunrise {
+    position: fixed;
+    width: 100%;
+    height: 85%;
+    bottom: -45%;
+    left: 0;
+
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255,255,210,0.95) 0%,
+        rgba(255,218,130,0.65) 20%,
+        rgba(255,190,100,0.25) 45%,
+        transparent 70%
+    );
+
+    filter: blur(12px);
+    animation: sunriseGlow 6s ease-in-out infinite alternate;
+    z-index: 0;
+}
+
+/* Sun rays */
+.rays {
+    position: fixed;
+    width: 160%;
+    height: 160%;
+    left: -30%;
+    bottom: -120%;
+
+    background: repeating-conic-gradient(
+        from -90deg at 50% 50%,
+        rgba(255,255,210,0.22) 0deg 3deg,
+        transparent 3deg 13deg
+    );
+
+    mask-image: radial-gradient(
+        ellipse at center,
+        black 0%,
+        transparent 68%
+    );
+
+    animation: rayGlow 12s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes sunriseGlow {
+    from { opacity: 0.65; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1.12); }
+}
+
+@keyframes rayGlow {
+    from { transform: rotate(-5deg); opacity: 0.4; }
+    to { transform: rotate(5deg); opacity: 0.85; }
+}
+
+/* Center text */
 .content {
     text-align: center;
     z-index: 10;
@@ -33,27 +98,37 @@ body {
 h1 {
     color: white;
     font-size: clamp(45px, 8vw, 75px);
-    text-shadow: 0 0 15px #8daaff, 0 0 35px #4c75ff;
+    text-shadow:
+        0 0 10px #fff,
+        0 0 25px #ffcccc,
+        0 0 45px #ff3155;
 }
 
 p {
-    color: #dce7ff;
+    color: white;
     font-size: 18px;
     margin-top: 12px;
     letter-spacing: 2px;
+    text-shadow: 0 2px 8px rgba(20,80,140,0.5);
 }
 
+/* Floating hearts */
 .heart {
     position: fixed;
     width: 22px;
     height: 22px;
-    background: #ff1744;
+    background: #ff001e;
     transform: rotate(-45deg);
-    animation: float 9s ease-in-out infinite alternate;
-    filter: drop-shadow(0 0 5px #ff1744)
-            drop-shadow(0 0 12px #ff4268)
-            drop-shadow(0 0 22px rgba(255, 23, 68, 0.8));
-    z-index: 1;
+
+    animation: float 12s ease-in-out infinite alternate;
+
+    filter:
+        drop-shadow(0 0 5px #ff001e)
+        drop-shadow(0 0 12px #ff385b)
+        drop-shadow(0 0 22px rgba(255,0,30,0.9))
+        drop-shadow(8px 10px 12px rgba(90,0,20,0.35));
+
+    z-index: 3;
 }
 
 .heart::before,
@@ -87,27 +162,60 @@ p {
     left: 5px;
 }
 
+/* Smooth floating movement */
 @keyframes float {
     0% {
         transform: translate(0, 0) rotate(-45deg);
     }
+
     25% {
-        transform: translate(150px, -120px) rotate(-45deg);
+        transform: translate(130px, -100px) rotate(-35deg);
     }
+
     50% {
-        transform: translate(-130px, -230px) rotate(-45deg);
+        transform: translate(-100px, -200px) rotate(-55deg);
     }
+
     75% {
-        transform: translate(180px, 100px) rotate(-45deg);
+        transform: translate(150px, 80px) rotate(-35deg);
     }
+
     100% {
-        transform: translate(-160px, 220px) rotate(-45deg);
+        transform: translate(-120px, 180px) rotate(-45deg);
     }
 }
+
+/* Soft light particles */
+.sparkle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #fff9d9;
+    box-shadow: 0 0 10px white, 0 0 20px #fff2a8;
+    animation: sparkle 4s ease-in-out infinite alternate;
+    z-index: 2;
+    pointer-events: none;
+}
+
+@keyframes sparkle {
+    from {
+        opacity: 0.15;
+        transform: scale(0.6);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
 </style>
 </head>
 
 <body>
+
+<div class="sunrise"></div>
+<div class="rays"></div>
 
 <div class="content">
     <h1>♥ MS ♥</h1>
@@ -116,14 +224,16 @@ p {
 
 <script>
 const colors = [
+    "#ff001e",
     "#ff1744",
-    "#ff2d55",
-    "#e60039",
-    "#ff4569",
-    "#d50032"
+    "#e60026",
+    "#ff304f",
+    "#d90025"
 ];
 
+// Floating hearts
 for (let i = 0; i < 40; i++) {
+
     const heart = document.createElement("div");
     heart.className = "heart";
 
@@ -135,17 +245,41 @@ for (let i = 0; i < 40; i++) {
     heart.style.top = Math.random() * 100 + "vh";
 
     const size = 12 + Math.random() * 22;
+
     heart.style.width = size + "px";
     heart.style.height = size + "px";
 
-    const color = colors[Math.floor(Math.random() * colors.length)];
+    const color = colors[
+        Math.floor(Math.random() * colors.length)
+    ];
+
     heart.style.background = color;
 
-    heart.style.animationDuration = (7 + Math.random() * 9) + "s";
-    heart.style.animationDelay = (-Math.random() * 12) + "s";
-    heart.style.animationDirection = Math.random() > 0.5 ? "alternate" : "alternate-reverse";
+    heart.style.animationDuration =
+        (10 + Math.random() * 9) + "s";
+
+    heart.style.animationDelay =
+        (-Math.random() * 15) + "s";
 
     document.body.appendChild(heart);
+}
+
+// Floating sunlight particles
+for (let i = 0; i < 35; i++) {
+
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+
+    sparkle.style.left = Math.random() * 100 + "vw";
+    sparkle.style.top = Math.random() * 100 + "vh";
+
+    sparkle.style.animationDuration =
+        (2 + Math.random() * 4) + "s";
+
+    sparkle.style.animationDelay =
+        (-Math.random() * 5) + "s";
+
+    document.body.appendChild(sparkle);
 }
 </script>
 
