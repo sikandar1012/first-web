@@ -4,164 +4,149 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MS Hearts ❤️</title>
+<title>MS Hearts</title>
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        overflow: hidden;
-        background: linear-gradient(
-            135deg,
-            #07152e,
-            #102c52,
-            #172d50,
-            #0b1935
-        );
-        font-family: Arial, sans-serif;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    /* Glowing background effect */
-    body::before {
-        content: "";
-        position: fixed;
-        width: 350px;
-        height: 350px;
-        background: #493b91;
-        filter: blur(140px);
-        opacity: 0.25;
-        top: 15%;
-        left: 30%;
-        pointer-events: none;
-    }
+body {
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg, #06145f, #102c9c, #1746c5, #07134d);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .heart {
-        position: absolute;
-        width: 45px;
-        height: 45px;
-        background: #ff6b9d;
-        transform: rotate(-45deg);
-        animation: float 5s infinite ease-in-out;
-        box-shadow: 0 0 12px #ff6b9d,
-                    0 0 25px rgba(255, 107, 157, 0.6);
-    }
+.content {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+    padding: 20px;
+}
 
-    .heart::before,
-    .heart::after {
-        content: "";
-        position: absolute;
-        width: 45px;
-        height: 45px;
-        background: inherit;
-        border-radius: 50%;
-    }
+h1 {
+    color: white;
+    font-size: clamp(45px, 8vw, 75px);
+    text-shadow: 0 0 15px #8daaff, 0 0 35px #4c75ff;
+}
 
-    .heart::before {
-        top: -22px;
-        left: 0;
-    }
+p {
+    color: #dce7ff;
+    font-size: 18px;
+    margin-top: 12px;
+    letter-spacing: 2px;
+}
 
-    .heart::after {
-        left: 22px;
-        top: 0;
-    }
+.heart {
+    position: fixed;
+    width: 22px;
+    height: 22px;
+    background: #ff1744;
+    transform: rotate(-45deg);
+    animation: float 9s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 5px #ff1744)
+            drop-shadow(0 0 12px #ff4268)
+            drop-shadow(0 0 22px rgba(255, 23, 68, 0.8));
+    z-index: 1;
+}
 
-    .heart span {
-        position: absolute;
-        z-index: 2;
-        color: white;
-        font-size: 12px;
-        font-weight: bold;
-        transform: rotate(45deg);
-        top: 15px;
-        left: 12px;
-        white-space: nowrap;
-        text-shadow: 0 0 5px white;
-    }
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: inherit;
+    border-radius: 50%;
+}
 
-    @keyframes float {
-        0%, 100% {
-            translate: 0 0;
-        }
-        50% {
-            translate: 0 -35px;
-        }
-    }
+.heart::before {
+    top: -11px;
+    left: 0;
+}
 
-    .title {
-        position: absolute;
-        top: 40%;
-        width: 100%;
-        text-align: center;
-        color: #ffb6d0;
-        font-size: 42px;
-        font-weight: bold;
-        text-shadow:
-            0 0 10px #ff6b9d,
-            0 0 25px #ff6b9d,
-            0 0 45px #c65baf;
-        z-index: 5;
-    }
+.heart::after {
+    left: 11px;
+    top: 0;
+}
 
-    .subtitle {
-        position: absolute;
-        top: 49%;
-        width: 100%;
-        text-align: center;
-        color: #d5c8ff;
-        font-size: 17px;
-        letter-spacing: 1px;
-        text-shadow: 0 0 10px #a78bfa;
-        z-index: 5;
-    }
+.heart span {
+    position: absolute;
+    z-index: 3;
+    transform: rotate(45deg);
+    color: white;
+    font-size: 8px;
+    font-weight: bold;
+    top: 5px;
+    left: 5px;
+}
 
+@keyframes float {
+    0% {
+        transform: translate(0, 0) rotate(-45deg);
+    }
+    25% {
+        transform: translate(150px, -120px) rotate(-45deg);
+    }
+    50% {
+        transform: translate(-130px, -230px) rotate(-45deg);
+    }
+    75% {
+        transform: translate(180px, 100px) rotate(-45deg);
+    }
+    100% {
+        transform: translate(-160px, 220px) rotate(-45deg);
+    }
+}
 </style>
 </head>
 
 <body>
 
-<div class="title">♥ MS ♥</div>
-<div class="subtitle">Little hearts, endless sweetness</div>
+<div class="content">
+    <h1>♥ MS ♥</h1>
+    <p>Little hearts, endless sweetness</p>
+</div>
 
 <script>
-    const colors = [
-        "#ff6b9d",
-        "#ff8fab",
-        "#d88cff",
-        "#b58aff",
-        "#ffb6c9"
-    ];
+const colors = [
+    "#ff1744",
+    "#ff2d55",
+    "#e60039",
+    "#ff4569",
+    "#d50032"
+];
 
-    for (let i = 0; i < 35; i++) {
+for (let i = 0; i < 40; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
 
-        let heart = document.createElement("div");
-        heart.className = "heart";
+    const label = document.createElement("span");
+    label.textContent = "MS";
+    heart.appendChild(label);
 
-        heart.innerHTML = "<span>MS</span>";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = Math.random() * 100 + "vh";
 
-        heart.style.left = Math.random() * 95 + "%";
-        heart.style.top = Math.random() * 90 + "%";
+    const size = 12 + Math.random() * 22;
+    heart.style.width = size + "px";
+    heart.style.height = size + "px";
 
-        let size = 0.5 + Math.random() * 0.8;
-        heart.style.scale = size;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    heart.style.background = color;
 
-        let color = colors[
-            Math.floor(Math.random() * colors.length)
-        ];
+    heart.style.animationDuration = (7 + Math.random() * 9) + "s";
+    heart.style.animationDelay = (-Math.random() * 12) + "s";
+    heart.style.animationDirection = Math.random() > 0.5 ? "alternate" : "alternate-reverse";
 
-        heart.style.background = color;
-        heart.style.boxShadow =
-            "0 0 12px " + color +
-            ", 0 0 25px " + color;
-
-        heart.style.animationDuration =
-            (3 + Math.random() * 4) + "s";
-
-        heart.style.animationDelay =
-            Math.random() * 4 + "s";
-
-        document.body.appendChild(heart);
-    }
+    document.body.appendChild(heart);
+}
 </script>
 
 </body>
