@@ -4,330 +4,164 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Little World of MS ❤️</title>
+<title>MS Hearts ❤️</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
-    font-family: 'Georgia', serif;
-    background: linear-gradient(135deg, #fff0f5, #ffd6e5, #ffeaf2);
-    color: #9d315b;
-}
-
-/* Floating hearts */
-
-.heart {
-    position: fixed;
-    color: #ff5c91;
-    pointer-events: none;
-    animation: floatUp linear infinite;
-    z-index: 0;
-    opacity: 0.7;
-}
-
-@keyframes floatUp {
-    from {
-        transform: translateY(110vh) rotate(0deg);
+    body {
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(
+            135deg,
+            #07152e,
+            #102c52,
+            #172d50,
+            #0b1935
+        );
+        font-family: Arial, sans-serif;
     }
-    to {
-        transform: translateY(-15vh) rotate(360deg);
+
+    /* Glowing background effect */
+    body::before {
+        content: "";
+        position: fixed;
+        width: 350px;
+        height: 350px;
+        background: #493b91;
+        filter: blur(140px);
+        opacity: 0.25;
+        top: 15%;
+        left: 30%;
+        pointer-events: none;
     }
-}
 
-/* Main welcome screen */
-
-.screen {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 25px;
-    position: relative;
-    z-index: 2;
-}
-
-h1 {
-    font-size: clamp(45px, 9vw, 75px);
-    color: #e64c82;
-    margin-bottom: 10px;
-    text-shadow: 0 4px 15px white;
-}
-
-.subtitle {
-    font-size: 19px;
-    color: #a9446b;
-    margin-bottom: 35px;
-}
-
-button {
-    border: none;
-    background: linear-gradient(135deg, #ff6097, #e83e78);
-    color: white;
-    padding: 15px 35px;
-    border-radius: 40px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 6px 20px #e88baa;
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: scale(1.07);
-    box-shadow: 0 8px 25px #df7299;
-}
-
-/* Envelope screen */
-
-#envelopeScreen {
-    display: none;
-}
-
-.envelope {
-    width: 190px;
-    height: 130px;
-    background: #ff9dbd;
-    position: relative;
-    margin: 40px auto;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 10px 30px #e7a0b9;
-    transition: 0.4s;
-}
-
-.envelope:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-left: 95px solid transparent;
-    border-right: 95px solid transparent;
-    border-top: 80px solid #ff6f9e;
-    z-index: 3;
-    transform-origin: top;
-    transition: transform 0.7s;
-}
-
-.envelope:after {
-    content: "♥";
-    position: absolute;
-    left: 50%;
-    top: 52%;
-    transform: translate(-50%, -50%);
-    font-size: 35px;
-    color: white;
-    z-index: 4;
-}
-
-.envelope.open:before {
-    transform: rotateX(180deg);
-}
-
-.envelope.open {
-    transform: translateY(10px);
-}
-
-.envelope-text {
-    font-size: 17px;
-    margin-top: 15px;
-}
-
-/* Letter */
-
-#letterScreen {
-    display: none;
-    padding: 35px 15px;
-}
-
-.letter {
-    background: rgba(255,255,255,0.94);
-    max-width: 620px;
-    width: 100%;
-    padding: 35px 28px;
-    border-radius: 20px;
-    box-shadow: 0 10px 40px #e5a0b9;
-    animation: appear 1s ease;
-    line-height: 1.9;
-    font-size: 16px;
-    color: #784056;
-    text-align: left;
-}
-
-.letter h2 {
-    text-align: center;
-    color: #e64c82;
-    font-size: 28px;
-}
-
-.letter p {
-    margin-bottom: 17px;
-}
-
-.signature {
-    text-align: center;
-    color: #e64c82;
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 25px;
-}
-
-@keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
+    .heart {
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        background: #ff6b9d;
+        transform: rotate(-45deg);
+        animation: float 5s infinite ease-in-out;
+        box-shadow: 0 0 12px #ff6b9d,
+                    0 0 25px rgba(255, 107, 157, 0.6);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
-.small-note {
-    font-size: 14px;
-    color: #a9446b;
-    margin-top: 15px;
-}
+    .heart::before,
+    .heart::after {
+        content: "";
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        background: inherit;
+        border-radius: 50%;
+    }
+
+    .heart::before {
+        top: -22px;
+        left: 0;
+    }
+
+    .heart::after {
+        left: 22px;
+        top: 0;
+    }
+
+    .heart span {
+        position: absolute;
+        z-index: 2;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        transform: rotate(45deg);
+        top: 15px;
+        left: 12px;
+        white-space: nowrap;
+        text-shadow: 0 0 5px white;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            translate: 0 0;
+        }
+        50% {
+            translate: 0 -35px;
+        }
+    }
+
+    .title {
+        position: absolute;
+        top: 40%;
+        width: 100%;
+        text-align: center;
+        color: #ffb6d0;
+        font-size: 42px;
+        font-weight: bold;
+        text-shadow:
+            0 0 10px #ff6b9d,
+            0 0 25px #ff6b9d,
+            0 0 45px #c65baf;
+        z-index: 5;
+    }
+
+    .subtitle {
+        position: absolute;
+        top: 49%;
+        width: 100%;
+        text-align: center;
+        color: #d5c8ff;
+        font-size: 17px;
+        letter-spacing: 1px;
+        text-shadow: 0 0 10px #a78bfa;
+        z-index: 5;
+    }
 
 </style>
 </head>
 
 <body>
 
-<!-- Floating hearts -->
-<script>
-for(let i = 0; i < 35; i++) {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = Math.random() > 0.5 ? "♥" : "♡";
-
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (12 + Math.random() * 20) + "px";
-    heart.style.animationDuration = (7 + Math.random() * 12) + "s";
-    heart.style.animationDelay = (-Math.random() * 15) + "s";
-
-    document.body.appendChild(heart);
-}
-</script>
-
-<!-- Welcome screen -->
-<section class="screen" id="welcomeScreen">
-
-    <h1>♥ MS ♥</h1>
-
-    <div class="subtitle">
-        A little world made with love...
-    </div>
-
-    <button onclick="showEnvelope()">
-        Enter My Little World ❤️
-    </button>
-
-    <div class="small-note">
-        Something special is waiting for you...
-    </div>
-
-</section>
-
-<!-- Envelope screen -->
-<section class="screen" id="envelopeScreen">
-
-    <h1 style="font-size:40px;">
-        A Little Surprise ❤️
-    </h1>
-
-    <div class="envelope" id="envelope"
-         onclick="openLetter()">
-    </div>
-
-    <div class="envelope-text">
-        A special letter, just for you.
-    </div>
-
-    <div class="small-note">
-        Tap the envelope to open it 💌
-    </div>
-
-</section>
-
-<!-- Letter screen -->
-<section class="screen" id="letterScreen">
-
-    <div class="letter">
-
-        <h2>To Someone Special ❤️</h2>
-
-        <p>
-            You are my pride, my happiness,
-            and my sweetest ego. ❤️
-        </p>
-
-        <p>
-            I can proudly say that I am loved by you,
-            and honestly, that feeling is one of the
-            most beautiful things in my life.
-        </p>
-
-        <p>
-            You make me feel special in ways that words
-            can never fully explain. It's not just about
-            having someone beside me; it's about having
-            someone whose love makes ordinary days feel
-            wonderful.
-        </p>
-
-        <p>
-            I don't need a perfect world when I have your
-            love to make my little world beautiful.
-            I feel lucky to have you, proud to be yours,
-            and grateful for every little moment we share.
-        </p>
-
-        <p>
-            If there is one thing I would always want
-            to brag about, it is this:
-            <b>I am loved by someone as special as you.</b>
-        </p>
-
-        <p>
-            You will always be my favourite reason to smile. ❤️
-        </p>
-
-        <div class="signature">
-            Forever proud of being loved by you. ❤️
-            <br>
-            MS
-        </div>
-
-    </div>
-
-</section>
+<div class="title">♥ MS ♥</div>
+<div class="subtitle">Little hearts, endless sweetness</div>
 
 <script>
+    const colors = [
+        "#ff6b9d",
+        "#ff8fab",
+        "#d88cff",
+        "#b58aff",
+        "#ffb6c9"
+    ];
 
-function showEnvelope() {
-    document.getElementById("welcomeScreen").style.display = "none";
-    document.getElementById("envelopeScreen").style.display = "flex";
-}
+    for (let i = 0; i < 35; i++) {
 
-function openLetter() {
-    const envelope = document.getElementById("envelope");
+        let heart = document.createElement("div");
+        heart.className = "heart";
 
-    envelope.classList.add("open");
+        heart.innerHTML = "<span>MS</span>";
 
-    setTimeout(function() {
-        document.getElementById("envelopeScreen").style.display = "none";
-        document.getElementById("letterScreen").style.display = "flex";
-    }, 900);
-}
+        heart.style.left = Math.random() * 95 + "%";
+        heart.style.top = Math.random() * 90 + "%";
 
+        let size = 0.5 + Math.random() * 0.8;
+        heart.style.scale = size;
+
+        let color = colors[
+            Math.floor(Math.random() * colors.length)
+        ];
+
+        heart.style.background = color;
+        heart.style.boxShadow =
+            "0 0 12px " + color +
+            ", 0 0 25px " + color;
+
+        heart.style.animationDuration =
+            (3 + Math.random() * 4) + "s";
+
+        heart.style.animationDelay =
+            Math.random() * 4 + "s";
+
+        document.body.appendChild(heart);
+    }
 </script>
 
 </body>
